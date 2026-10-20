@@ -1,0 +1,6 @@
+id=dsufix
+name=DSU fix for ColorOS-on-Xiaomi (AOD + charger + FOD)
+version=1.0
+versionCode=1
+author=dsh
+description=Apply AOD always-on/fullscreen settings, allow the OPlus charger HAL to start on SDK 37, keep the FOD bridge alive, and 6-digit PIN friendly boot hooks.
