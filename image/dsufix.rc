@@ -1,0 +1,26 @@
+# dsufix: Xiaomi 14 + ColorOS 17 移植版修复集（已烧进系统镜像）
+#
+# 位置：/system/etc/dsufix/（脚本与模块）
+#       /system/etc/init/dsufix.rc（本文件，开机自启）
+#
+# 作用：
+#   1. 开机后等待 sys.boot_completed
+#   2. 把 /system/etc/dsufix/modules/{fodbridge,dsufix} 安装到 /data/adb/modules/
+#   3. 执行 /system/etc/dsufix/apply_all.sh：
+#        - AOD 全屏 + 全天候常亮
+#        - 关闭 dock/sleep 屏保
+#        - 指纹图标位置对齐 + 打开 ColorOS 锁屏指纹图标开关
+#        - 充电 HAL 的 SDK 37 崩溃修复（临时 SDK=36 拉起后还原）
+#        - 启动指纹桥接
+#
+# 日志：/data/local/tmp/dsufix_boot.log 与 /data/local/tmp/dsufix.log
+
+service dsufix-boot /system/bin/sh /system/etc/dsufix/boot.sh
+    class late_start
+    user root
+    group root system
+    oneshot
+    disabled
+
+on property:sys.boot_completed=1
+    start dsufix-boot
