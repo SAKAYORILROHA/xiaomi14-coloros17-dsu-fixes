@@ -4,6 +4,12 @@
 LOG=/data/local/tmp/dsufix.log
 log() { echo "$(date '+%m-%d %H:%M:%S') $*" >> "$LOG"; }
 
+# 只在本移植系统（ColorOS）上执行；原厂系统直接跳过
+if [ -z "$(getprop ro.build.version.oplusrom)" ]; then
+  log "not coloros port, skip"
+  exit 0
+fi
+
 sleep 20
 # vendor HALs are up by now; put the real SDK value back
 resetprop ro.build.version.sdk 37
